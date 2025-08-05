@@ -1,0 +1,15 @@
+# requirements.txt (updated)
+
+streamlit
+google-generativeai
+langchain
+langchain-google-genai
+Flask
+flask-cors
+
+#steps to run the code
+# python --version
+#python -m venv .venv
+#.venv\Scripts\activate
+# next install required package
+#python backend.py        ---> ithu run panna "Running on http://127.0.0.1:8000"  ipadi onnum varum atha open panna output page

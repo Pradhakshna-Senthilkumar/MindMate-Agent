@@ -1,0 +1,334 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;400&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', Arial, sans-serif;
+  background: radial-gradient(circle at 30% 50%, #7b2ff2 0%, #1e003e 100%);
+  color: #fff;
+  min-height: 100vh;
+}
+
+.chat-container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 320px;
+  background: rgba(40, 0, 80, 0.9);
+  display: flex;
+  flex-direction: column;
+  padding: 30px 0 0 0;
+  position: relative;
+  min-width: 230px;
+  transition: width 0.2s;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 16px;
+  padding: 16px 24px;
+  margin: 0 16px 32px 16px;
+  background: rgba(255,255,255,0.05);
+}
+
+.icon {
+  font-size: 1.3rem;
+}
+
+.assistant-text {
+  font-weight: 400;
+  font-size: 1.2rem;
+  flex: 1;
+  text-align: left;
+  margin-left: 12px;
+}
+
+.menu-icon {
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.sidebar-title {
+  margin-left: 32px;
+  margin-bottom: 18px;
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  opacity: 0.8;
+}
+
+.memoir-list {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.memoir-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.07);
+  border-radius: 8px;
+  padding: 12px 20px;
+  margin: 6px 16px;
+  color: #ded1fa;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.memoir-item:hover {
+  background: rgba(255,255,255,0.14);
+}
+
+.dots {
+  font-size: 1.7rem;
+  color: #b292f6;
+  margin-left: 10px;
+  opacity: 0.8;
+}
+
+/* Main Chat */
+.main-chat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.robot-top {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  pointer-events: none;
+  height: 90px;
+}
+
+.big-robo {
+  width: 110px;
+  height: auto;
+  margin-top: 16px;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.25));
+  background: transparent;
+}
+
+.messages {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 110px 0 100px 0;
+  overflow-y: auto;
+  z-index: 1;
+  min-width: 0;
+}
+
+.message-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 38px;
+  position: relative;
+}
+
+.message-row.left {
+  flex-direction: row;
+  margin-left: 36px;
+}
+
+.message-row.right {
+  flex-direction: row-reverse;
+  margin-right: 36px;
+}
+
+.avatar-brain {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  margin-right: 12px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.avatar-user {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: 10px;
+  background: #fff;
+  object-fit: cover;
+}
+
+.message-bubble {
+  min-width: 120px;
+  min-height: 50px;
+  max-width: 450px;
+  background: #ececec;
+  border-radius: 18px;
+  margin: 0 8px 0 0;
+  padding: 18px 26px;
+  color: #333;
+  font-size: 1.11rem;
+  word-break: break-word;
+  box-shadow: 0 2px 16px 0 rgba(0,0,0,0.07);
+  border: none;
+}
+
+.message-row.right .message-bubble {
+  margin: 0 0 0 8px;
+}
+
+/* Chat Input + Graph Icon */
+.chat-input-row {
+  position: absolute;
+  bottom: 32px;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 40px;
+  z-index: 20;
+}
+
+.chart-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: transparent;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+
+.chart-btn:hover {
+  background: #fff;
+  color: #7b2ff2;
+}
+
+.chart-icon {
+  font-size: 2rem;
+}
+
+.chat-input {
+  flex: 1;
+  border: none;
+  border-radius: 15px;
+  padding: 20px 24px;
+  font-size: 1.13rem;
+  outline: none;
+  background: #ececec;
+  color: #222;
+  font-family: inherit;
+  box-shadow: 0 2px 14px 0 rgba(0,0,0,0.07);
+}
+
+.send-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: transparent;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+
+.send-btn:hover {
+  background: #fff;
+  color: #7b2ff2;
+}
+
+.send-arrow {
+  font-size: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1100px) {
+  .container {
+    grid-template-columns: 240px 1fr; /* reduce sidebar width */
+  }
+
+  .memoir-list {
+    padding: 10px;
+    overflow-y: auto;
+  }
+
+  .memoir-item {
+    padding: 6px;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+  }
+
+  .memoir-avatar {
+    width: 35px;
+    height: 35px;
+  }
+
+  .memoir-name {
+    font-size: 0.95rem;
+  }
+
+  .memoir-snippet {
+    font-size: 0.8rem;
+  }
+
+  .memoir-chat {
+    padding: 15px;
+  }
+
+  .chat-header {
+    font-size: 1rem;
+  }
+
+  .chat-messages {
+    padding: 10px;
+  }
+
+  .message {
+    padding: 8px;
+    margin: 6px 0;
+    font-size: 0.85rem;
+  }
+
+  .message.user {
+    max-width: 80%;
+  }
+
+  .chat-input {
+    padding: 10px;
+  }
+
+  .chat-input input {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .chat-input button {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+}

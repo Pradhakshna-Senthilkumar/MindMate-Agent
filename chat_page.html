@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Assistant Chat UI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="chat.css">
+</head>
+<body>
+  <div class="chat-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <!-- ...your sidebar code unchanged... -->
+    </aside>
+
+    <!-- Main Chat Section -->
+    <div class="main-chat">
+      <div class="messages" id="chatArea">
+        <!-- Messages will be dynamically inserted here -->
+      </div>
+      <!-- Chat Input + Graph Icon -->
+      <div class="chat-input-row">
+        <button class="chart-btn" aria-label="Show Graph">
+          <span class="chart-icon">&#128200;</span>
+        </button>
+        <input type="text" class="chat-input" id="userInput" placeholder="how are you feeling today? tell me I’m here to listen !!!.....">
+        <button class="send-btn" id="sendBtn" aria-label="Send">
+          <span class="send-arrow">&#8593;</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS for chat functionality -->
+  <script>
+  function appendMessage(text, sender) {
+    const chatArea = document.getElementById('chatArea');
+    const msgRow = document.createElement('div');
+    msgRow.className = 'message-row ' + (sender === 'You' ? 'right' : 'left');
+    if(sender === 'You') {
+      msgRow.innerHTML = `
+        <div class="message-bubble">${text}</div>
+        <img src="user.svg" alt="User Icon" class="avatar-user">
+      `;
+    } else {
+      msgRow.innerHTML = `
+        <img src="sitting robot.png" alt="Brain Icon" class="avatar-brain">
+        <div class="message-bubble">${text}</div>
+      `;
+    }
+    chatArea.appendChild(msgRow);
+    chatArea.scrollTop = chatArea.scrollHeight;
+  }
+
+  // Fetch and render chat history on load
+  async function loadChatHistory() {
+    try {
+      const response = await fetch('http://localhost:8000/history');
+      const history = await response.json();
+      history.forEach(msg => appendMessage(msg.text, msg.sender));
+    } catch (e) {
+      appendMessage('Could not load chat history.', "MindMate");
+    }
+  }
+
+  async function sendMessage() {
+    const input = document.getElementById('userInput');
+    const message = input.value.trim();
+    if (!message) return;
+    appendMessage(message, "You");
+    input.value = "";
+
+    try {
+      const response = await fetch('http://localhost:8000/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message })
+      });
+      const data = await response.json();
+      appendMessage(data.reply, "MindMate");
+    } catch (e) {
+      appendMessage('Error contacting backend.', "MindMate");
+    }
+  }
+
+  document.getElementById('sendBtn').onclick = sendMessage;
+  document.getElementById('userInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') sendMessage();
+  });
+
+  // On page load, fetch the chat history
+  window.onload = loadChatHistory;
+</script>
+</body>
+</html>
